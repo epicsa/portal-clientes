@@ -1,14 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
+    "defaultMode": "default",
     "allow": [
       "Bash(mvn test)",
       "PowerShell(mvn test)"
     ],
+    "ask": [
+      "Edit(./pom.xml)"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
-      "Read(**/application-prod*.properties)"
+      "Read(**/application-prod*.properties)",
+      "Bash(git push *)",
+      "PowerShell(git push *)"
     ]
   }
 }
