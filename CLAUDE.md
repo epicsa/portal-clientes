@@ -38,3 +38,26 @@ propia o asistida por IA, debe verificar el cumplimiento de estas reglas.
 - Ningún secreto (contraseñas, API keys, tokens) se guarda hardcodeado en el código
   ni en los ficheros de configuración versionados. Se usan variables de entorno o un
   gestor de secretos.
+
+## Stack y versiones
+- Java 17 y Spring Boot 3.3.4, con Maven.
+- Base de datos de desarrollo: H2 en memoria. Se vacía al parar la aplicación.
+
+## Comandos
+- Arrancar: `mvn spring-boot:run` (API en http://localhost:8080/clientes).
+- Probar: `mvn test`.
+- No hay Maven Wrapper: se usa el `mvn` instalado.
+
+## Estructura de paquetes
+- Paquete base: `com.imagina.demo`, con `controller`, `service`, `repository` y `model`.
+- Un endpoint nuevo toca las capas en este orden: controller, service, repository.
+
+## Dependencias
+- No añadir dependencias al `pom.xml` sin consultarlo antes con el equipo.
+
+## Datos de prueba
+- Solo datos ficticios. Nunca datos reales de ciudadanos ni de clientes.
+
+## Tickets y ramas
+<!-- Convención pendiente hasta el tema 11 -->
+Convención pendiente de definir.
