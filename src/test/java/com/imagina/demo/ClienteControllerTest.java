@@ -1,11 +1,14 @@
 package com.imagina.demo;
 
 import com.imagina.demo.model.Cliente;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,7 +35,9 @@ class ClienteControllerTest {
 
     @Test
     void listarClientesDevuelveOk() {
-        ResponseEntity<Cliente[]> respuesta = restTemplate.getForEntity("/clientes", Cliente[].class);
+        ResponseEntity<String> respuesta = restTemplate.getForEntity("/clientes", String.class);
         assertThat(respuesta.getStatusCode().is2xxSuccessful()).isTrue();
+        List<Object> contenido = JsonPath.read(respuesta.getBody(), "$.content");
+        assertThat(contenido).isNotNull();
     }
 }
