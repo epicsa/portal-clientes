@@ -25,6 +25,9 @@ public class ClienteService {
     }
 
     public Cliente crear(Cliente cliente) {
+        if (cliente.getEmail() != null) {
+            cliente.setEmail(cliente.getEmail().trim());
+        }
         return clienteRepository.save(cliente);
     }
 
