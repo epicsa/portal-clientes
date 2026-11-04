@@ -16,6 +16,8 @@ public class Cliente {
 
     private String email;
 
+    private boolean activo = true;
+
     public Cliente() {
     }
 
@@ -46,5 +48,13 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

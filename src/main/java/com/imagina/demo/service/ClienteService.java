@@ -20,11 +20,11 @@ public class ClienteService {
     }
 
     public List<Cliente> listarTodos() {
-        return clienteRepository.findAll();
+        return clienteRepository.findByActivoTrue();
     }
 
     public Optional<Cliente> buscarPorId(Long id) {
-        return clienteRepository.findById(id);
+        return clienteRepository.findByIdAndActivoTrue(id);
     }
 
     public Cliente crear(Cliente cliente) {
@@ -38,7 +38,10 @@ public class ClienteService {
     }
 
     public void eliminar(Long id) {
-        clienteRepository.deleteById(id);
+        clienteRepository.findById(id).ifPresent(cliente -> {
+            cliente.setActivo(false);
+            clienteRepository.save(cliente);
+        });
     }
 
     private boolean esEmailValido(String email) {
