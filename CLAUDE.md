@@ -59,5 +59,10 @@ propia o asistida por IA, debe verificar el cumplimiento de estas reglas.
 - Solo datos ficticios. Nunca datos reales de ciudadanos ni de clientes.
 
 ## Tickets y ramas
-<!-- Convención pendiente hasta el tema 11 -->
-Convención pendiente de definir.
+- Todo cambio de código parte de un ticket de Redmine. No se trabaja directamente en `main`.
+- Rama de funcionalidad: `feature/redmine-<N>-<slug>`, creada desde `main`.
+- Rama de corrección urgente: `hotfix/redmine-<N>-<slug>`, creada desde `main`.
+- `<slug>`: una o dos palabras en minúsculas separadas por guiones (por ejemplo, `validacion-email`).
+- Mensaje de commit: `tipo: descripción corta en español (refs #<N>)`. Tipos: `feat`, `fix`, `docs`, `chore`, `test`, `refactor`.
+- Un commit hace una sola cosa, y `mvn test` está en verde antes de cada commit.
+- Claude puede proponer el mensaje de commit, pero no ejecuta `git commit`, `git merge` ni `git push`: los ejecuta el desarrollador.
