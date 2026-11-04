@@ -28,6 +28,9 @@ public class ClienteService {
     }
 
     public Cliente crear(Cliente cliente) {
+        if (cliente.getEmail() != null) {
+            cliente.setEmail(cliente.getEmail().trim());
+        }
         if (!esEmailValido(cliente.getEmail())) {
             throw new EmailInvalidoException();
         }
