@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class ClienteService {
+
+    private static final Pattern FORMATO_EMAIL = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
 
     private final ClienteRepository clienteRepository;
 
@@ -25,10 +28,17 @@ public class ClienteService {
     }
 
     public Cliente crear(Cliente cliente) {
+        if (!esEmailValido(cliente.getEmail())) {
+            throw new EmailInvalidoException();
+        }
         return clienteRepository.save(cliente);
     }
 
     public void eliminar(Long id) {
         clienteRepository.deleteById(id);
+    }
+
+    private boolean esEmailValido(String email) {
+        return email != null && FORMATO_EMAIL.matcher(email).matches();
     }
 }
