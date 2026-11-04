@@ -2,9 +2,10 @@ package com.imagina.demo.service;
 
 import com.imagina.demo.model.Cliente;
 import com.imagina.demo.repository.ClienteRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -19,8 +20,8 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public List<Cliente> listarTodos() {
-        return clienteRepository.findByActivoTrue();
+    public Page<Cliente> listarTodos(Pageable pageable) {
+        return clienteRepository.findByActivoTrue(pageable);
     }
 
     public Optional<Cliente> buscarPorId(Long id) {

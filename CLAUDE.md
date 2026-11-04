@@ -66,3 +66,11 @@ propia o asistida por IA, debe verificar el cumplimiento de estas reglas.
 - Mensaje de commit: `tipo: descripción corta en español (refs #<N>)`. Tipos: `feat`, `fix`, `docs`, `chore`, `test`, `refactor`.
 - Un commit hace una sola cosa, y `mvn test` está en verde antes de cada commit.
 - Claude puede proponer el mensaje de commit, pero no ejecuta `git commit`, `git merge` ni `git push`: los ejecuta el desarrollador.
+
+## Tests
+- Para todo comportamiento nuevo, escribe primero los tests y comprueba que fallan por el motivo correcto.
+- Nunca debilites ni borres un assert para poner un test en verde. Si un test falla porque el código está mal, dilo; no lo cambies.
+- Muestra siempre la salida real de mvn test (número de tests y fallos), no un resumen.
+- Si te pido solo tests, no edites nada de src/main.
+- Un commit con tests en rojo solo se permite en una rama feature y nunca se fusiona a main en rojo.
+- Datos de prueba siempre ficticios (clienteNNN@example.com).

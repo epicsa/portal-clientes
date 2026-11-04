@@ -3,12 +3,13 @@ package com.imagina.demo.controller;
 import com.imagina.demo.model.Cliente;
 import com.imagina.demo.service.ClienteService;
 import com.imagina.demo.service.EmailInvalidoException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
@@ -21,8 +22,8 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<Cliente> listar() {
-        return clienteService.listarTodos();
+    public Page<Cliente> listar(@PageableDefault(size = 20, sort = "id") Pageable pageable) {
+        return clienteService.listarTodos(pageable);
     }
 
     @GetMapping("/{id}")
