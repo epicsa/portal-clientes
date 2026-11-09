@@ -1,12 +1,11 @@
 package com.imagina.demo.controller;
 
-import com.imagina.demo.model.Cliente;
 import com.imagina.demo.service.ClienteDuplicadoException;
 import com.imagina.demo.service.ClienteService;
 import com.imagina.demo.service.EmailInvalidoException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -23,20 +22,21 @@ public class ClienteController {
     }
 
     @GetMapping
-    public Page<Cliente> listar(@PageableDefault(size = 20, sort = "id") Pageable pageable) {
-        return clienteService.listarTodos(pageable);
+    public PagedModel<ClienteResponse> listar(@PageableDefault(size = 20, sort = "id") Pageable pageable) {
+        return new PagedModel<>(clienteService.listarTodos(pageable).map(ClienteMapper::toResponse));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtener(@PathVariable Long id) {
+    public ResponseEntity<ClienteResponse> obtener(@PathVariable Long id) {
         return clienteService.buscarPorId(id)
+                .map(ClienteMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Cliente crear(@RequestBody Cliente cliente) {
-        return clienteService.crear(cliente);
+    public ClienteResponse crear(@RequestBody ClienteRequest request) {
+        return ClienteMapper.toResponse(clienteService.crear(ClienteMapper.toEntity(request)));
     }
 
     @DeleteMapping("/{id}")
