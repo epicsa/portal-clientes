@@ -1,6 +1,7 @@
 package com.imagina.demo.controller;
 
 import com.imagina.demo.model.Cliente;
+import com.imagina.demo.service.ClienteDuplicadoException;
 import com.imagina.demo.service.ClienteService;
 import com.imagina.demo.service.EmailInvalidoException;
 import org.springframework.data.domain.Page;
@@ -49,5 +50,12 @@ public class ClienteController {
         ProblemDetail error = ProblemDetail.forStatusAndDetail(
                 HttpStatus.BAD_REQUEST, "El email no tiene un formato válido");
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(ClienteDuplicadoException.class)
+    public ResponseEntity<ProblemDetail> clienteDuplicado(ClienteDuplicadoException ex) {
+        ProblemDetail error = ProblemDetail.forStatusAndDetail(
+                HttpStatus.CONFLICT, "Ya existe un cliente activo con ese email");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 }

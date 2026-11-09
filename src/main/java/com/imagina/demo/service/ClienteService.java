@@ -7,17 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Service
 public class ClienteService {
 
-    private static final Pattern FORMATO_EMAIL = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
-
     private final ClienteRepository clienteRepository;
+    private final ClienteValidator clienteValidator;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, ClienteValidator clienteValidator) {
         this.clienteRepository = clienteRepository;
+        this.clienteValidator = clienteValidator;
     }
 
     public Page<Cliente> listarTodos(Pageable pageable) {
@@ -29,12 +28,7 @@ public class ClienteService {
     }
 
     public Cliente crear(Cliente cliente) {
-        if (cliente.getEmail() != null) {
-            cliente.setEmail(cliente.getEmail().trim());
-        }
-        if (!esEmailValido(cliente.getEmail())) {
-            throw new EmailInvalidoException();
-        }
+        clienteValidator.normalizarYValidar(cliente);
         return clienteRepository.save(cliente);
     }
 
@@ -43,9 +37,5 @@ public class ClienteService {
             cliente.setActivo(false);
             clienteRepository.save(cliente);
         });
-    }
-
-    private boolean esEmailValido(String email) {
-        return email != null && FORMATO_EMAIL.matcher(email).matches();
     }
 }
