@@ -74,3 +74,7 @@ propia o asistida por IA, debe verificar el cumplimiento de estas reglas.
 - Si te pido solo tests, no edites nada de src/main.
 - Un commit con tests en rojo solo se permite en una rama feature y nunca se fusiona a main en rojo.
 - Datos de prueba siempre ficticios (clienteNNN@example.com).
+
+## API y contrato
+- La API nunca expone entidades JPA (ver `docs/adr/0001-dtos-en-la-api.md`).
+- Si cambias endpoints o el formato del listado, actualiza README.md y docs/arquitectura.md en el mismo commit.
